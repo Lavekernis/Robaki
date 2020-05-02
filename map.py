@@ -44,7 +44,7 @@ class Map():
                         rx - var.camera_vector.x), round(ry - var.camera_vector.y)), round(radius / 10))
                 intersects.append(point_coordinate)
 
-        if len(intersects) == 0:
+        if len(intersects) == 0 or len(intersects) == points:
             return None
         else:
             normal = Vector2(0)
