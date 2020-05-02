@@ -6,7 +6,7 @@ import variables as var
 pygame.init()
 
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((var.SCREEN_WITH, var.SCREEN_HEIGHT))
+screen = pygame.display.set_mode((var.SCREEN_WIDTH, var.SCREEN_HEIGHT))
 running = True
 
 
@@ -25,7 +25,7 @@ while running:
         #CAMERA SCROLLING
         if event.type == pygame.MOUSEMOTION:
             x,y = event.pos
-            if x > var.SCREEN_WITH-var.SCROLLING_CONST:
+            if x > var.SCREEN_WIDTH-var.SCROLLING_CONST:
                 var.scroling_X_Inc = True
             else:
                 var.scroling_X_Inc = False

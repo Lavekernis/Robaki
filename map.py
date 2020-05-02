@@ -13,7 +13,7 @@ class Map():
 
     def draw(self, screen):
         camera_image = (
-            var.camera_vector[0], var.camera_vector[1], var.SCREEN_WITH, var.SCREEN_HEIGHT)
+            var.camera_vector[0], var.camera_vector[1], var.SCREEN_WIDTH, var.SCREEN_HEIGHT)
         screen.blit(self.surface, (0, 0), camera_image)
 
     def circle_collision(self, pos, radius, points=36, screen=None):
@@ -24,8 +24,7 @@ class Map():
         intersects = []
 
         for i in range(0, points):
-            point_coordinate = Vector2(sin(phi * i),
-                                       cos(phi * i)) * radius
+            point_coordinate = Vector2(sin(phi * i), cos(phi * i)) * radius
             point_coordinate += Vector2(pos.x, pos.y)
 
             rx = round(point_coordinate.x)
