@@ -12,7 +12,9 @@ running = True
 
 
 while running:
-
+    
+    frame_time = clock.get_time()
+    
     screen.fill((0, 0, 0))
 
 
@@ -23,26 +25,26 @@ while running:
         #CAMERA SCROLLING
         if event.type == pygame.MOUSEMOTION:
             x,y = event.pos
-            if x > var.SCREEN_WITH-20:
+            if x > var.SCREEN_WITH-var.SCROLLING_CONST:
                 var.scroling_X_Inc = True
             else:
                 var.scroling_X_Inc = False
-            if x < 20:
+            if x < var.SCROLLING_CONST:
                 var.scroling_X_Dec = True
             else:
                 var.scroling_X_Dec = False
-            if y > var.SCREEN_HEIGHT-20:
+            if y > var.SCREEN_HEIGHT-var.SCROLLING_CONST:
                 var.scroling_Y_Inc = True
             else:
                 var.scroling_Y_Inc = False
-            if y < 20:
+            if y < var.SCROLLING_CONST:
                 var.scroling_Y_Dec = True
             else:
                 var.scroling_Y_Dec = False
             
 
     #GAME UPDATE
-    game.update(screen)
+    game.update(screen,frame_time)
     
     #DISPLAY UPDATE
     pygame.display.update()
