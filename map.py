@@ -29,8 +29,7 @@ class Map():
         intersects = []
 
         for i in range(0, points):
-            point_coordinate = Vector2(sin(phi * i),
-                                       cos(phi * i)) * radius
+            point_coordinate = Vector2(sin(phi * i), cos(phi * i)) * radius
             point_coordinate += Vector2(pos.x, pos.y)
 
             rx = round(point_coordinate.x)

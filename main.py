@@ -21,7 +21,7 @@ while running:
             running = False
         # CAMERA SCROLLING
         if event.type == pygame.MOUSEMOTION:
-            x, y = event.pos
+            x,y = event.pos
             if x > var.SCREEN_WIDTH-var.SCROLLING_CONST:
                 var.scroling_X_Inc = True
             else:
