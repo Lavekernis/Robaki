@@ -10,6 +10,8 @@ class Map():
     def __init__(self, path):
         """Initalizes map from bmp file"""
         self.surface = pygame.image.load(os.path.join(var.FILEPATH, path))
+        # white being transparent
+        self.surface.set_colorkey((255, 255, 255, 255))
 
     def draw(self, screen):
         camera_image = (
@@ -35,8 +37,8 @@ class Map():
             if rx >= self.surface.get_width() or rx < 0 or ry >= self.surface.get_height() or ry < 0:
                 continue
 
-            # (0,0,0) is black colour, currently used to symbolize terrain
-            if self.surface.get_at((rx, ry)) == (0, 0, 0, 255):
+            # Isn't white, which represents lack of terrain
+            if self.surface.get_at((rx, ry)) != (255, 255, 255, 255):
                 if screen != None:
                     pygame.draw.circle(screen, (255, 0, 255), (round(
                         rx - var.camera_vector.x), round(ry - var.camera_vector.y)), round(radius / 10))
