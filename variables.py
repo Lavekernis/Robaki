@@ -3,7 +3,7 @@ import os
 
 FILEPATH = os.path.dirname(__file__)
 
-SCREEN_WITH = 800
+SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 
 

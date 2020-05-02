@@ -13,7 +13,7 @@ class Map():
 
     def draw(self, screen):
         camera_image = (
-            var.camera_vector[0], var.camera_vector[1], var.SCREEN_WITH, var.SCREEN_HEIGHT)
+            var.camera_vector[0], var.camera_vector[1], var.SCREEN_WIDTH, var.SCREEN_HEIGHT)
         screen.blit(self.surface, (0, 0), camera_image)
 
     def circle_collision(self, pos, radius, points=36, screen=None):
@@ -50,3 +50,34 @@ class Map():
                 normal -= (item - pos)
             normal = normal.normalize()
             return CollisionInfo(normal)
+
+    def remove_circle(self, pos, radius):
+        top_left = Vector2(pos.x - radius, pos.y - radius)
+        bottom_right = Vector2(pos.x + radius, pos.y + radius)
+
+        # oob check for both points
+        if top_left.x < 0:
+            top_left.x = 0
+        if top_left.x >= self.surface.get_width():
+            top_left.x = self.surface.get_width()
+        if top_left.y < 0:
+            top_left.y = 0
+        if top_left.y >= self.surface.get_height():
+            top_left.y = self.surface.get_height()
+        if bottom_right.x < 0:
+            bottom_right.x = 0
+        if bottom_right.x >= self.surface.get_width():
+            bottom_right.x = self.surface.get_width()
+        if bottom_right.y < 0:
+            bottom_right.y = 0
+        if bottom_right.y >= self.surface.get_height():
+            bottom_right.y = self.surface.get_height()
+
+        print(round(top_left.x), round(bottom_right.x))
+        print(round(bottom_right.y), round(top_left.y))
+        for dx in range(round(top_left.x), round(bottom_right.x)):
+            for dy in range(round(top_left.y), round(bottom_right.y)):
+                if Vector2(dx, dy).distance_to(pos) > radius:
+                    continue
+                else:
+                    self.surface.set_at((dx, dy), (255, 255, 255))
