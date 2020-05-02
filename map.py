@@ -1,8 +1,9 @@
 import variables as var
 import os
-from collision_info import CollisionInfo
-import pygame.math
 import pygame
+from collision_info import CollisionInfo
+from pygame.math import Vector2
+from math import sin, cos
 
 
 class Map():
@@ -16,21 +17,27 @@ class Map():
         screen.blit(self.surface, (0, 0), camera_image)
 
     def circle_collision(self, pos, radius, points=36):
-        """Checks intersection of circle given the radius and position. Creates n amount of points on the circle to calculate proper normal."""
+        """Checks intersection of circle given the radius and position.
+        Creates n amount of points on the circle to calculate proper normal.
+        Returns CollisionInfo if collided, None otherwise."""
         phi = 360.0 / points
         intersects = []
 
         for i in range(0, points):
-            point_coordinate = (round(sin(phi * i)) * radius,
-                                round(cos(phi * i)) * radius)
-            point_coordinate += Vector2(round(pos.x), round(pos.y))
+            point_coordinate = Vector2(sin(phi * i),
+                                       cos(phi * i)) * radius
+            point_coordinate += Vector2(pos.x, pos.y)
+
+            rx = round(point_coordinate.x)
+            ry = round(point_coordinate.y)
 
             # out of bounds check
-            if point_coordinate.x >= self.surface.get_width() or point_coordinate.x < 0 or point_coordinate.y >= self.surface.get_height() or point_coordinate.y < 0:
+            if rx >= self.surface.get_width() or rx < 0 or ry >= self.surface.get_height() or ry < 0:
                 continue
 
             # (0,0,0) is black colour, currently used to symbolize terrain
-            if self.surface.get_at(point_coordinate) == (0, 0, 0):
+            if self.surface.get_at((rx, ry)) == (0, 0, 0):
+                print("intersect happened at: " + str(point_coordinate))
                 intersects.append(point_coordinate)
 
         if len(intersects) == 0:
@@ -41,4 +48,3 @@ class Map():
                 normal -= item
             normal = normal.normalize()
             return CollisionInfo(normal)
-        self.surface = pygame.image.load(var.os.path.join(var.filepath, path))
