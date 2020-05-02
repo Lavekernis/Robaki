@@ -7,13 +7,16 @@ from math import sin, cos, pi
 
 
 class Map():
-    def __init__(self, path):
+    def __init__(self, map_path, background_path):
         """Initalizes map from bmp file"""
-        self.surface = pygame.image.load(os.path.join(var.FILEPATH, path))
+        self.surface = pygame.image.load(os.path.join(var.FILEPATH, map_path))
+        self.background = pygame.image.load(
+            os.path.join(var.FILEPATH, background_path))
         # white being transparent
         self.surface.set_colorkey((255, 255, 255, 255))
 
     def draw(self, screen):
+        screen.blit(self.background, (0, 0))
         camera_image = (
             var.camera_vector[0], var.camera_vector[1], var.SCREEN_WIDTH, var.SCREEN_HEIGHT)
         screen.blit(self.surface, (0, 0), camera_image)

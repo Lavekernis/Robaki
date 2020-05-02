@@ -3,7 +3,7 @@ from pygame.math import Vector2
 from map import *
 import time
 
-map = Map("Map.bmp")
+map = Map("Map.bmp", "background.bmp")
 start = time.time()
 map.remove_circle(Vector2(1200, 500), 150)
 end = time.time()
