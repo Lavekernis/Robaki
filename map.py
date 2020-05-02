@@ -8,7 +8,7 @@ import pygame
 class Map():
     def __init__(self, path):
         """Initalizes map from bmp file"""
-        self.surface = pygame.image.load(os.path.join(FILEPATH, path))
+        self.surface = pygame.image.load(os.path.join(var.FILEPATH, path))
 
     def draw(self, screen):
         camera_image = (
