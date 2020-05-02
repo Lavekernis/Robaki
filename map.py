@@ -1,20 +1,19 @@
-import pygame
-import pygame.math
-import numpy as np
-from collision_info import CollisionInfo
+import variables as var
 import os
-
-filepath = os.path.dirname(__file__)
+from collision_info import CollisionInfo
+import pygame.math
+import pygame
 
 
 class Map():
     def __init__(self, path):
         """Initalizes map from bmp file"""
-        self.surface = pygame.image.load(os.path.join(filepath, path))
+        self.surface = pygame.image.load(os.path.join(FILEPATH, path))
 
-    def draw(self, camera_offset, screen):
-        # TODO: implement camera offset
-        screen.blit(self.surface, (100, 0))
+    def draw(self, screen):
+        camera_image = (
+            var.camera_vector[0], var.camera_vector[1], var.SCREEN_WITH, var.SCREEN_HEIGHT)
+        screen.blit(self.surface, (0, 0), camera_image)
 
     def circle_collision(self, pos, radius, points=36):
         """Checks intersection of circle given the radius and position. Creates n amount of points on the circle to calculate proper normal."""
@@ -42,3 +41,4 @@ class Map():
                 normal -= item
             normal = normal.normalize()
             return CollisionInfo(normal)
+        self.surface = pygame.image.load(var.os.path.join(var.filepath, path))
