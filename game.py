@@ -3,6 +3,9 @@ from pygame.math import Vector2
 from map import *
 
 map = Map("Map.bmp")
+print(map.surface.get_at((0, 0)))
+print(map.surface.get_at((622, 438)))
+print(map.surface.get_at((623, 439)))
 
 pygame.font.init()
 font = font = pygame.font.SysFont("comicsansms", 48)
@@ -31,8 +34,8 @@ def update(screen, frame_time):
     cameraScrolling(frame_time)
     map.draw(screen)
 
-    world_x = var.camera_vector.y + (var.SCREEN_WITH/2)
-    world_y = var.camera_vector.x + (var.SCREEN_HEIGHT / 2)
+    world_x = var.camera_vector.x + (var.SCREEN_WITH/2)
+    world_y = var.camera_vector.y + (var.SCREEN_HEIGHT / 2)
     screen_center = (round(var.SCREEN_WITH/2), round(var.SCREEN_HEIGHT / 2))
     radius = 50
 
@@ -41,7 +44,7 @@ def update(screen, frame_time):
 
     pygame.draw.circle(screen, (255, 0, 0), screen_center, radius)
 
-    info = map.circle_collision(Vector2(world_x, world_y), radius)
+    info = map.circle_collision(Vector2(world_x, world_y), radius, 36, screen)
     if info != None:
         text2 = font.render("Normal: (" + str(round(info.normal.x)) +
                             ", " + str(round(info.normal.y)) + ")", True, (0, 128, 128))
