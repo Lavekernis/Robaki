@@ -14,4 +14,5 @@ scroling_X_Dec = False
 scroling_X_Inc = False
 scroling_X_Inc = False
 SCROLLING_CONST = 20
-SCROLLING_SPEED = 0.5
+SCROLLING_SPEED = 500
+GRAVITY = 9.81

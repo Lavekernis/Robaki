@@ -21,7 +21,7 @@ class Map():
             var.camera_vector[0], var.camera_vector[1], var.SCREEN_WIDTH, var.SCREEN_HEIGHT)
         screen.blit(self.surface, (0, 0), camera_image)
 
-    def circle_collision(self, pos, radius, points=36, screen=None):
+    def circle_collision(self, pos, radius, screen=None, points=36):
         """Checks intersection of circle given the radius and position.
         Creates n amount of points on the circle to calculate proper normal.
         Returns CollisionInfo if collided, None otherwise."""
@@ -53,9 +53,28 @@ class Map():
             for item in intersects:
                 normal -= (item - pos)
             normal = normal.normalize()
-            return CollisionInfo(normal)
+            if screen != None:
+                pygame.draw.line(screen, (0, 255, 0), (round(
+                    pos.x - var.camera_vector.x), round(pos.y - var.camera_vector.y)),
+                    (round(
+                        pos.x - var.camera_vector.x), round(pos.y - var.camera_vector.y)) + (normal * radius), 5)
+            return CollisionInfo(normal, pos)
+
+    def circlecast_collision(self, pos, direction, range, radius, screen=None):
+        destination = direction.normalize() * range
+        length = destination.length()
+        dx = destination.x / length
+        dy = destination.y / length
+        for i in range(0, round(length)):
+            rx = round(dx * i)
+            ry = round(dy * i)
+            info = self.circle_collision(Vector2(rx, ry), radius, screen)
+            if info != None:
+                return info
+        return None
 
     def remove_circle(self, pos, radius):
+        # If turns out too slow use PixelArray
         top_left = Vector2(pos.x - radius, pos.y - radius)
         bottom_right = Vector2(pos.x + radius, pos.y + radius)
 
@@ -77,8 +96,6 @@ class Map():
         if bottom_right.y >= self.surface.get_height():
             bottom_right.y = self.surface.get_height()
 
-        print(round(top_left.x), round(bottom_right.x))
-        print(round(bottom_right.y), round(top_left.y))
         for dx in range(round(top_left.x), round(bottom_right.x)):
             for dy in range(round(top_left.y), round(bottom_right.y)):
                 if Vector2(dx, dy).distance_to(pos) > radius:

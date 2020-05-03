@@ -5,16 +5,12 @@ import time
 import worm
 
 map = Map("Map.bmp", "background.bmp")
-start = time.time()
 map.remove_circle(Vector2(1200, 500), 150)
-end = time.time()
-print(end - start)
-
 
 
 pygame.font.init()
 font = font = pygame.font.SysFont("comicsansms", 48)
-physic_objects_list = [worm.Worm((100,100)),worm.Worm((1500,1500))] 
+physic_objects_list = [worm.Worm((100, 100)), worm.Worm((1500, 1500))]
 
 
 def cameraScrolling(frame_time):
@@ -40,12 +36,15 @@ def update(screen, frame_time):
     cameraScrolling(frame_time)
     map.draw(screen)
 
-    #OBJECT_DRAWING_LOOP
+    # Physics Object List Handling
     for obj in physic_objects_list:
+        obj.update(frame_time)
         if obj.position[0] > var.camera_vector.x and obj.position[1] > var.camera_vector.y:
-            x,y = round(obj.position[0] - var.camera_vector[0]),round(obj.position[1] - var.camera_vector[1])
-            obj.draw(screen,(x,y))
+            x, y = round(obj.position[0] - var.camera_vector[0]
+                         ), round(obj.position[1] - var.camera_vector[1])
+            obj.draw(screen, (x, y))
 
+    # Collision Debugging
     world_x = var.camera_vector.x + (var.SCREEN_WIDTH / 2)
     world_y = var.camera_vector.y + (var.SCREEN_HEIGHT / 2)
     screen_center = (round(var.SCREEN_WIDTH/2), round(var.SCREEN_HEIGHT / 2))
@@ -56,12 +55,10 @@ def update(screen, frame_time):
 
     pygame.draw.circle(screen, (255, 0, 0), screen_center, radius)
 
-    info = map.circle_collision(Vector2(world_x, world_y), radius, 36, screen)
+    info = map.circle_collision(Vector2(world_x, world_y), radius, screen)
     if info != None:
         text2 = font.render("Normal: (" + str(round(info.normal.x)) +
                             ", " + str(round(info.normal.y)) + ")", True, (0, 128, 128))
-        pygame.draw.line(screen, (0, 255, 0), screen_center,
-                         screen_center + (info.normal * radius), 5)
         screen.blit(text2, (0, 48 + 5))
 
     screen.blit(text, (0, 0))

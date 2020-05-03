@@ -1,3 +1,4 @@
 class CollisionInfo():
-    def __init__(self, normal):
+    def __init__(self, normal, position):
         self.normal = normal
+        self.position = position
