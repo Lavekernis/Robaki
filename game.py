@@ -1,6 +1,7 @@
 import variables as var
 from pygame.math import Vector2
 from map import *
+from enum import Enum
 import time
 import worm
 
@@ -16,6 +17,39 @@ pygame.font.init()
 font = font = pygame.font.SysFont("comicsansms", 48)
 physic_objects_list = [worm.Worm((100,100)),worm.Worm((1500,1500))] 
 
+
+class InputState(Enum):
+    PRESSED = 1
+    RELEASED = 2
+    HELD = 3
+    NO_ACTION = 4
+
+
+class InputManager():
+
+    def __init__(self):
+        self._input_state = {275:InputState.NO_ACTION,274:InputState.NO_ACTION,32:InputState.NO_ACTION,276:InputState.NO_ACTION,277:InputState.NO_ACTION}
+
+    def event_handler(self,event):
+        """For given event.key change its state"""        
+        if event.type == pygame.KEYDOWN:
+            if event.key in self._input_state:
+                if self._input_state[event.key] != InputState.PRESSED and self._input_state[event.key] != InputState.HELD:
+                    self._input_state[event.key] = InputState.PRESSED
+                    print(str(event.key)+" PRESSED") 
+        elif event.type == pygame.KEYUP:
+            if event.key in self._input_state:
+                if self._input_state[event.key] == InputState.RELEASED:
+                    self._input_state[event.key] = InputState.NO_ACTION
+                    print(str(event.key)+" NO_ACTION")
+                else:
+                    self._input_state[event.key] = InputState.RELEASED 
+                    print(str(event.key)+" RELEASED")
+        for state in self._input_state.values():
+            if state == InputState.PRESSED:
+                state = InputState.HELD
+                print(str(event.key)+" HELD")
+                    
 
 def cameraScrolling(frame_time):
     if var.scroling_X_Inc and var.camera_vector.x + var.SCREEN_WIDTH < map.surface.get_width():
