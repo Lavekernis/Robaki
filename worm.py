@@ -23,3 +23,4 @@ class Worm(PhysicsObject):
 
     def draw(self, screen, pos):
         pygame.draw.circle(screen, (255, 0, 0), pos, 10)
+    
