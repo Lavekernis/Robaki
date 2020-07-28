@@ -3,18 +3,19 @@ from pygame.math import Vector2
 from map import *
 from enum import Enum
 import time
-import worm
+from worm import Worm
+from team_manager import TeamManager
 
 map = Map("Map.bmp", "background.bmp")
 map.remove_circle(Vector2(1200, 500), 150)
 
 pygame.font.init()
-font = font = pygame.font.SysFont("comicsansms", 48)
-physic_objects_list = [worm.Worm((100, 100)), worm.Worm((1500, 1500))]
-teams = []
+TeamManager()
+font = pygame.font.SysFont("comicsansms", 48)
+physic_objects_list = [Worm((100, 100)), Worm((1500, 1500))]
 
 
-def cameraScrolling(frame_time):
+def cameraScrolling(frame_time: float):
     if var.scroling_X_Inc and var.camera_vector.x + var.SCREEN_WIDTH < map.surface.get_width():
         var.camera_vector.x += var.SCROLLING_SPEED * frame_time
         if var.camera_vector.x + var.SCREEN_WIDTH > map.surface.get_width():
@@ -33,13 +34,13 @@ def cameraScrolling(frame_time):
             var.camera_vector.y = 0
 
 
-def update(screen, frame_time):
+def update(screen: pygame.display, frame_time: float):
     cameraScrolling(frame_time)
     map.draw(screen)
 
     for obj in physic_objects_list:
         obj.update(screen, frame_time)
-        
+
     world_x = var.camera_vector.x + (var.SCREEN_WIDTH / 2)
     world_y = var.camera_vector.y + (var.SCREEN_HEIGHT / 2)
     screen_center = (round(var.SCREEN_WIDTH/2), round(var.SCREEN_HEIGHT / 2))
@@ -57,3 +58,9 @@ def update(screen, frame_time):
         screen.blit(text2, (0, 48 + 5))
 
     screen.blit(text, (0, 0))
+
+
+def add_worm(pos: Vector2, team: int):
+    w = Worm(pos)
+    physic_objects_list.append(w)
+    TeamManager.instance.add_worm(w, team)

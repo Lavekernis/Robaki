@@ -22,7 +22,7 @@ class InputManager():
         if InputManager.instance == None:
             InputManager.instance = self
 
-    def event_handler(self, event):
+    def event_handler(self, event: pygame.event):
         """For given event.key change its state"""
         if event.type == pygame.KEYDOWN:
             if event.key in self._input_state:
@@ -41,11 +41,11 @@ class InputManager():
             if state == InputState.PRESSED:
                 state = InputState.HELD
 
-    def is_key_held(self, key):
-        return self._input_state[key] == InputState.HELD
+    def is_key_held(self, key: int):
+        return self._input_state[key].value == InputState.HELD.value
 
-    def is_key_pressed(self, key):
-        return self._input_state[key] == InputState.PRESSED
+    def is_key_pressed(self, key: int):
+        return self._input_state[key].vla == InputState.PRESSED.value
 
-    def is_key_released(self, key):
-        return self._input_state[key] == InputState.RELEASED
+    def is_key_released(self, key: int):
+        return self._input_state[key].value == InputState.RELEASED.value

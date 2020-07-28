@@ -7,7 +7,7 @@ from math import sin, cos, pi
 
 
 class Map():
-    def __init__(self, map_path, background_path):
+    def __init__(self, map_path: str, background_path: str):
         """Initalizes map from bmp file"""
         self.surface = pygame.image.load(os.path.join(var.FILEPATH, map_path))
         self.background = pygame.image.load(
@@ -15,13 +15,13 @@ class Map():
         # white being transparent
         self.surface.set_colorkey((255, 255, 255, 255))
 
-    def draw(self, screen):
+    def draw(self, screen: pygame.display):
         screen.blit(self.background, (0, 0))
         camera_image = (
             var.camera_vector[0], var.camera_vector[1], var.SCREEN_WIDTH, var.SCREEN_HEIGHT)
         screen.blit(self.surface, (0, 0), camera_image)
 
-    def circle_collision(self, pos, radius, screen=None, points=36):
+    def circle_collision(self, pos: Vector2, radius: float, screen=None, points=36):
         """Checks intersection of circle given the radius and position.
         Creates n amount of points on the circle to calculate proper normal.
         Returns CollisionInfo if collided, None otherwise."""
@@ -60,7 +60,7 @@ class Map():
                         pos.x - var.camera_vector.x), round(pos.y - var.camera_vector.y)) + (normal * radius), 5)
             return CollisionInfo(normal, pos)
 
-    def circlecast_collision(self, pos, direction, range, radius, screen=None):
+    def circlecast_collision(self, pos: Vector2, direction: Vector2, range: float, radius: float, screen: pygame.display = None):
         destination = direction.normalize() * range
         length = destination.length()
         dx = destination.x / length
@@ -73,7 +73,7 @@ class Map():
                 return info
         return None
 
-    def remove_circle(self, pos, radius):
+    def remove_circle(self, pos: Vector2, radius: float):
         # If turns out too slow use PixelArray
         top_left = Vector2(pos.x - radius, pos.y - radius)
         bottom_right = Vector2(pos.x + radius, pos.y + radius)
