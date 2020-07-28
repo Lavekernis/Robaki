@@ -1,10 +1,10 @@
 import game
 import pygame
 import variables as var
-
+import input_manager
 
 pygame.init()
-inp = game.InputManager()
+inp = input_manager.InputManager()
 clock = pygame.time.Clock()
 screen = pygame.display.set_mode((var.SCREEN_WIDTH, var.SCREEN_HEIGHT))
 running = True
@@ -13,7 +13,7 @@ running = True
 while running:
 
     frame_time = clock.get_time()
-      
+
     screen.fill((0, 0, 0))
     # EVENT LOOP
     for event in pygame.event.get():
@@ -38,10 +38,9 @@ while running:
                 var.scroling_Y_Dec = True
             else:
                 var.scroling_Y_Dec = False
-        
-        #INPUT
-        inp.event_handler(event)
 
+        # INPUT
+        inp.event_handler(event)
 
     # GAME UPDATE
     game.update(screen, frame_time / 1000)
