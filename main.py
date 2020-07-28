@@ -13,7 +13,7 @@ running = True
 while running:
 
     frame_time = clock.get_time()
-
+      
     screen.fill((0, 0, 0))
     # EVENT LOOP
     for event in pygame.event.get():

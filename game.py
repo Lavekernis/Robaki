@@ -28,7 +28,11 @@ class InputState(Enum):
 class InputManager():
 
     def __init__(self):
-        self._input_state = {275:InputState.NO_ACTION,274:InputState.NO_ACTION,32:InputState.NO_ACTION,276:InputState.NO_ACTION,277:InputState.NO_ACTION}
+        self._input_state = {var.RIGHT_ARROW_KEY_ID:InputState.NO_ACTION,
+                            var.DOWN_ARROW_KEY_ID:InputState.NO_ACTION,
+                            var.SPACE_KEY_ID:InputState.NO_ACTION,
+                            var.LEFT_ARROW_KEY_ID:InputState.NO_ACTION,
+                            var.UP_ARROW_KEY_ID:InputState.NO_ACTION}
 
     def event_handler(self,event):
         """For given event.key change its state"""        
@@ -48,7 +52,6 @@ class InputManager():
         for state in self._input_state.values():
             if state == InputState.PRESSED:
                 state = InputState.HELD
-                print(str(event.key)+" HELD")
                     
 
 def cameraScrolling(frame_time):
