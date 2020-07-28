@@ -11,6 +11,7 @@ class InputState(Enum):
 
 
 class InputManager():
+    instance = None
 
     def __init__(self):
         self._input_state = {var.RIGHT_ARROW_KEY_ID: InputState.NO_ACTION,
@@ -18,6 +19,8 @@ class InputManager():
                              var.SPACE_KEY_ID: InputState.NO_ACTION,
                              var.LEFT_ARROW_KEY_ID: InputState.NO_ACTION,
                              var.UP_ARROW_KEY_ID: InputState.NO_ACTION}
+        if InputManager.instance == None:
+            InputManager.instance = self
 
     def event_handler(self, event):
         """For given event.key change its state"""
