@@ -45,7 +45,7 @@ class InputManager():
         return self._input_state[key].value == InputState.HELD.value
 
     def is_key_pressed(self, key: int):
-        return self._input_state[key].vla == InputState.PRESSED.value
+        return self._input_state[key].value == InputState.PRESSED.value
 
     def is_key_released(self, key: int):
         return self._input_state[key].value == InputState.RELEASED.value
