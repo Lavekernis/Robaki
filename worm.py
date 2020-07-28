@@ -13,14 +13,21 @@ class Worm(PhysicsObject):
         self._team = 0
         self._position = pos
 
-    def update(self, frame_time):
+    def draw(self,screen,pos):
+        pygame.draw.circle(screen, (255, 0, 0), (round(pos.x),round(pos.y)), 10)
+    
+    def update(self,screen,frame_time):
         if self._equalibrium == False:
             self._acceleration = Vector2(0, var.GRAVITY)
             self._velocity += self._acceleration * frame_time
             self._position += self._velocity * frame_time
             if game.map.circle_collision(self._position, 10) != None:
                 self._equalibrium = True
+        cor = super().camera_cord_converter()
+        self.draw(screen,cor)
 
-    def draw(self, screen, pos):
-        pygame.draw.circle(screen, (255, 0, 0), pos, 10)
-    
+        if self._is_selected:
+            
+            #cośtam pobieranie z input managera
+        
+        

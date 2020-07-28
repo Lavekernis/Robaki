@@ -37,15 +37,9 @@ def update(screen, frame_time):
     cameraScrolling(frame_time)
     map.draw(screen)
 
-    # Physics Object List Handling
     for obj in physic_objects_list:
-        obj.update(frame_time)
-        if obj.position[0] > var.camera_vector.x and obj.position[1] > var.camera_vector.y:
-            x, y = round(obj.position[0] - var.camera_vector[0]
-                         ), round(obj.position[1] - var.camera_vector[1])
-            obj.draw(screen, (x, y))
-
-    # Collision Debugging
+        obj.update(screen, frame_time)
+        
     world_x = var.camera_vector.x + (var.SCREEN_WIDTH / 2)
     world_y = var.camera_vector.y + (var.SCREEN_HEIGHT / 2)
     screen_center = (round(var.SCREEN_WIDTH/2), round(var.SCREEN_HEIGHT / 2))
