@@ -40,14 +40,9 @@ class InputManager():
         for key,state in self._input_state.items():
             if state == InputState.PRESSED:
                 self._input_state[key] = InputState.HELD
+            if state == InputState.RELEASED:
+                self._input_state[key] = InputState.NO_ACTION
         # print(self._input_state)        
-
-
-    # def crude_solution(self):
-    #     for key,state in self._input_state.items():
-    #         if state == InputState.PRESSED:
-    #             self._input_state[key] = InputState.HELD
-    #     print(self._input_state)
 
     def is_key_held(self, key: int):
         return self._input_state[key].value == InputState.HELD.value
