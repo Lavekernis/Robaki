@@ -45,7 +45,6 @@ while running:
 
     # GAME UPDATE
     game.update(screen, frame_time / 1000)
-
     # DISPLAY UPDATE
     pygame.display.update()
     clock.tick(60)

@@ -12,8 +12,8 @@ map.remove_circle(Vector2(1200, 500), 150)
 pygame.font.init()
 TeamManager()
 font = pygame.font.SysFont("comicsansms", 48)
-physic_objects_list = [Worm((100, 100)), Worm((1500, 1500))]
-
+physic_objects_list = [Worm((100, 100)), Worm((1500, 1500),is_selected=True)]
+teams = []
 
 def cameraScrolling(frame_time: float):
     if var.scroling_X_Inc and var.camera_vector.x + var.SCREEN_WIDTH < map.surface.get_width():
